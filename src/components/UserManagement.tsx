@@ -9,8 +9,8 @@ import { User } from '@/types/User';
 export default function UserManagement() {
     const [users, setUsers] = useState<User[]>([]);
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
-    const [showAddEditModal, setShowAddEditModal] = useState(false);
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showAddEdit, setShowAddEdit] = useState(false);
+    const [showDelete, setShowDelete] = useState(false);
 
     const loadUsers = async () => {
         try {
@@ -27,23 +27,63 @@ export default function UserManagement() {
 
     const handleEdit = (user: User) => {
         setSelectedUser(user);
-        setShowAddEditModal(true);
+        setShowAddEdit(true);
         console.log('Edit user: ', user);
     };
 
     const handleAdd = () => {
         setSelectedUser(null);
-        setShowAddEditModal(true);
+        setShowAddEdit(true);
         console.log( 'Add user ');
     };
 
     const handleDelete = (user: User) => {
         setSelectedUser(user);
-        setShowDeleteModal(true);
+        setShowDelete(true);
         console.log( 'Delete user: ', user);
     };
 
+    const handleDeleteConfirm = async () => {
+        if(!selectedUser) return;
+        try {
+            await fetch(`/api/users/${selectedUser.UserID}`, {
+                method: 'DELETE',
+            });
+            setShowDelete(false);
+            loadUsers();
+        } catch (err) {
+            console.error('Delete failed: ', err);
+        }
+    };
+
+
     return (
-        <UserTable users={users} onEdit={handleEdit} onDelete={handleDelete} />
+        <div className='space-y-4'>
+            <div className="text-right">
+                <button
+                    onClick={handleAdd} 
+                    className='bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700'
+                    >
+                    + Add User
+                </button>
+            </div>
+            <UserTable users={users} onEdit={handleEdit} onDelete={handleDelete} />
+
+            {showAddEdit && (
+                <AddUser
+                    user={selectedUser}
+                    onClose={() => setShowAddEdit(false)}
+                    onSaved={loadUsers}
+                />
+            )}
+
+            {showDelete && (
+                <ConfirmDelete
+                    user={selectedUser}
+                    onClose={() => setShowDelete(false)}
+                    onConfirm={handleDelete} 
+                />
+            )}
+        </div>
     );
 };
