@@ -8,22 +8,39 @@ import { User } from '@/types/User';
 
 export default function UserManagement() {
     const [users, setUsers] = useState<User[]>([]);
+    const [selectedUser, setSelectedUser] = useState<User | null>(null);
+    const [showAddEditModal, setShowAddEditModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+    const loadUsers = async () => {
+        try {
+            const res = await fetch('/api/users');
+            const data = await res.json();
+            setUsers(data);
+        } catch (err) {
+            console.error('Failed to fetch users: ', err);
+        }
+    };
     useEffect(() => {
-        fetch('/api/users')
-        .then(res => res.json())
-        .then(data => setUsers(data))
-        .catch(err => console.error('Failed  to load users: ', err));
+       loadUsers();
     }, []);
 
     const handleEdit = (user: User) => {
+        setSelectedUser(user);
+        setShowAddEditModal(true);
         console.log('Edit user: ', user);
-        //TODO: open modal and handle editing
+    };
+
+    const handleAdd = () => {
+        setSelectedUser(null);
+        setShowAddEditModal(true);
+        console.log( 'Add user ');
     };
 
     const handleDelete = (user: User) => {
+        setSelectedUser(user);
+        setShowDeleteModal(true);
         console.log( 'Delete user: ', user);
-        //TODO: confirm and call API
     };
 
     return (
