@@ -1,21 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { User } from '@/types';
 
-// type User = {
-//     UserId?: number;
-//     DisplayName: string;
-//     Email: string;
-//     IsOSPAdmin: boolean;
-//     Status: string;
-//     FunctionalUser: number;
-//     AdminUser: number;
-//     BlockAccess: number;
-//     O365Email: string;
-//     MFA_Mobile: string;
-//     ColourMode: string;
-//     HierarchyMaintenance: boolean;
-// };
-
 type AddUserProps = {
     isOpen: boolean;
     onClose: () => void;
@@ -59,7 +44,7 @@ export default function AddUser({ isOpen, onClose, onSave, initialData } :AddUse
         onClose();
     };
 
-    if (isOpen) return null;
+    if (!isOpen) return null;
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -68,7 +53,7 @@ export default function AddUser({ isOpen, onClose, onSave, initialData } :AddUse
                 <input
                     type="text"
                     name="DisplayName"
-                    placeholder="Display Name"
+                    placeholder="Name"
                     value={formState.DisplayName}
                     onChange={handleChange}
                     className="border p-2 w-full mb-2"
@@ -82,7 +67,7 @@ export default function AddUser({ isOpen, onClose, onSave, initialData } :AddUse
                     className="border p-2 w-full mb-2"
                 />
                 <select
-                    name="Statys"
+                    name="Status"
                     value={formState.Status}
                     onChange={handleChange}
                     className="border p-2 w-full mb-2"
@@ -91,19 +76,24 @@ export default function AddUser({ isOpen, onClose, onSave, initialData } :AddUse
                     <option value="Inactive">Inactive</option>
                     <option value="Testing">Testing</option>
                 </select>
+                <div className="flex justify-between items-center mb-2">
+                    <div className="flex">
+
+                        <input
+                            type="checkbox"
+                            name="IsOSPAdmin"
+                            checked={formState.IsOSPAdmin}
+                            onChange={handleChange}
+                            className="mr-2"
+                        />
+                        <label>OSP Admin</label>
+                    </div>
+                    <div className="flex">
+                        <button onClick={handleSubmit} className="bg-blue-600 min-w-20 text-white p-2 rounded mr-2">Save</button>
+                        <button onClick={onClose} className="bg-gray-400 min-w-20 text-white p-2 rounded">Cancel</button>
+                    </div>
+                </div>
             </div>
-            <div className="flex items-center mb-2">
-                <input
-                    type="checkbox"
-                    name="IsOSPAdmin"
-                    checked={formState.IsOSPAdmin}
-                    onChange={handleChange}
-                    className="mr-2"
-                />
-                <label>OSP Admin</label>
-            </div>
-            <button onClick={handleSubmit} className="bg-blue-600 text-white p-2 rounded mr-2">Save</button>
-            <button onClick={onClose} className="bg-gray-400 text-white p-2 rounded">Cancel</button>
         </div>
     )
 }

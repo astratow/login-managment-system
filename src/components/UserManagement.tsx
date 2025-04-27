@@ -107,6 +107,7 @@ export default function UserManagement() {
                     isOpen={showDelete}
                     onClose={() => setShowDelete(false)}
                     onConfirmDelete={handleDeleteConfirm} 
+                    userName={selectedUser?.DisplayName || ''}
                 />
             )}
         </div>
