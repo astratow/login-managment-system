@@ -10,5 +10,5 @@ export type User = {
     O365Email: string;
     MFA_Mobile: string;
     ColourMode: string;
-    HierarchyMainenance: boolean;
+    HierarchyMaintenance: boolean;
 }
