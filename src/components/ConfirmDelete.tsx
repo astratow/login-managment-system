@@ -1,5 +1,7 @@
 import React from 'react';
 import { User } from '@/types';
+import { prisma } from '../lib/prisma';
+
 
 type ConfirmDeleteProps = {
     user: User | null;
@@ -11,7 +13,12 @@ type ConfirmDeleteProps = {
 
 const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({ isOpen, onClose, onConfirmDelete, user }) => {
     if (!isOpen || !user) return null;
-
+    
+    async function getUsers() {
+      const users = await prisma.user.findMany();
+      console.log(users);
+    }
+    
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
             <div className="bg-white p-6 rounded-lg shadow-lg w-96">
