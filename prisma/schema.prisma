@@ -14,7 +14,18 @@ generator client {
 }
 
 model User {
-  id    Int    @id @default(autoincrement())
-  name  String
-  email String @unique
+  id                   Int     @id @default(autoincrement()) @map("UserID")
+  displayName          String  @map("DisplayName")
+  email                String  @unique @map("Email")
+  isOSPAdmin           Boolean? @map("IsOSPAdmin")
+  status               String  @map("Status")
+  functionalUser       Int     @map("FunctionalUser")
+  adminUser            Int     @map("AdminUser")
+  blockAccess          Int     @map("BlockAccess")
+  o365Email            String? @map("O365Email")
+  mfaMobile            String? @map("MFA_Mobile")
+  colourMode           String  @map("ColourMode")
+  hierarchyMaintenance Boolean? @map("HierarchyMaintenance")
+
+  @@map("User")
 }
