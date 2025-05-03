@@ -1,4 +1,4 @@
-import sql from 'mssql';
+import * as sql from 'mssql';
 
 const config: sql.config = {
     user: process.env.DB_USER,
@@ -8,23 +8,28 @@ const config: sql.config = {
     options: {
         encrypt: true,
     }
-}
+};
 
-export async function executeStoredProc (   procName: string, 
-                                            inputParams: 
-                                            { 
-                                                name: string,
-                                                type: any,
-                                                value: any 
-                                            }[] = []) {
-                                                try {
-                                                    await sql.connect(config);
-                                                    const request = new sql.Request();
-                                                    inputParams.forEach(param => request.input(param.name, param.type, param.value));
-                                                    const result = await request.execute(procName);
-                                                    return result;
-                                                } catch (err) {
-                                                    console.error(err);
-                                                    throw err;
-                                                }
-                                            }
+export async function executeStoredProc(   
+    procName: string, 
+    inputParams: { 
+        name: string,
+        type: sql.ISqlType, 
+        value: any 
+    }[] = []
+) {
+    try {
+        await sql.connect(config);
+        const request = new sql.Request();
+        inputParams.forEach(param => 
+            request.input(param.name, param.type, param.value)
+        );
+        const result = await request.execute(procName);
+        return result;
+    } catch (err) {
+        console.error(err);
+        throw err;
+    } finally {
+        await sql.close();
+    }
+}
