@@ -40,9 +40,12 @@ export default function AddUser({ isOpen, onClose, onSave, initialData } :AddUse
     };
 
     const handleSubmit = async () => {
+        const method = initialData ? 'PUT' : 'POST';
+        const url = initialData ? `/api/users/${initialData.UserID}` : '/api/users/create';
+    
         try {
-            const response = await fetch('/api/users/create', {
-                method: 'POST',
+            const response = await fetch(url, {
+                method,
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -50,12 +53,12 @@ export default function AddUser({ isOpen, onClose, onSave, initialData } :AddUse
             });
     
             if (!response.ok) {
-                throw new Error('Failed to create user');
+                const errorText = await response.text();
+                throw new Error(`Save failed: ${errorText}`);
             }
     
-            const createdUser = await response.json();
-            console.log("User created:", createdUser);
-            onSave(createdUser);
+            const savedUser = await response.json();
+            onSave(savedUser);
             onClose();
         } catch (error) {
             console.error('Error saving user:', error);

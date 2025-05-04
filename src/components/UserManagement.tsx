@@ -51,6 +51,10 @@ export default function UserManagement() {
         }
     };
 
+    const handleUserSave = (user: User) => {
+        console.log('Saved user: ', user);
+        loadUsers();
+    }
     const handleDeleteConfirm = async () => {
         if(!selectedUser) return;
         try {
@@ -88,7 +92,7 @@ export default function UserManagement() {
                     isOpen={showAddEdit}
                     initialData={selectedUser ?? undefined}
                     onClose={() => setShowAddEdit(false)}
-                    onSave={loadUsers}
+                    onSave={handleUserSave}
                 />
             )}
 

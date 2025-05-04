@@ -13,8 +13,20 @@ interface UserTableProps {
 }
 
 export default function UserTable({ users, onEdit, onDelete} : UserTableProps) {
-    
-    
+    const getRowBgColor = (status: string | null | undefined) => {
+        if (!status) return '';
+        switch (status.toLowerCase()) {
+          case 'inactive':
+            return 'bg-gray-200 text-gray-700';
+          case 'testing':
+          case 'test':
+            return 'bg-yellow-100 text-yellow-800';
+          case 'active':
+            return 'bg-green-100 text-green-800';
+          default:
+            return 'bg-white text-gray-800';
+        }
+      };
     if (users.length === 0) {
         return <div>No users found.</div>
     }
@@ -35,11 +47,11 @@ export default function UserTable({ users, onEdit, onDelete} : UserTableProps) {
                     {users.map((user) => (
                         <tr
                         key={user.UserID}
-                        className={`border-b border-gray-200`}
+                        className={`border-b border-gray-200 ${getRowBgColor(user.Status)}`}
                         >
 
                         <td className="p-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm sm:text-base">
-                            <div className="font-medium text-gray-900">{user.DisplayName}</div>
+                            <div className="font-medium ">{user.DisplayName}</div>
                             <div className="text-gray-500 text-sm md:hidden">{user.Email}</div>
                         </td>
 
