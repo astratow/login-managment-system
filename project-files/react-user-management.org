@@ -1,0 +1,59 @@
+
+* Frontend Developer Assessment - Spring 2025
+This project builds a user management interface in React (Next.js) using data from an Azure SQL Database via stored procedures.
+DEADLINE: <2025-05-01 Thu 09:00>
+
+** Design & Planning
+DEADLINE: <2025-04-25 Fri>
+- [ ] Define user types and required fields
+- [ ] Plan UI layout (dashboard/table, modals for form, search/filter bar)
+- [ ] Sketch wireframes or create low-fidelity mockups
+- [ ] Decide on component structure
+- [ ] Choose state management strategy
+- [ ] Outline API contract
+- [ ] Identify stored procedure inputs/outputs
+
+** Project Setup
+DEADLINE: <2025-04-26 Sat>
+- [ ] Create new Next.js app (with Tailwind CSS)
+- [ ] Set up folder structure
+- [ ] Configure environment variables
+
+** Database Connection (API Backend)
+DEADLINE: <2025-04-27 Sun>
+- [ ] Install `mssql` package
+- [ ] Create DB helper (/lib/db.js)
+- [ ] Create GET /api/users
+- [ ] Create POST /api/users
+- [ ] Create PUT /api/users/[id]
+- [ ] Create DELETE /api/users/[id]
+
+** Stored Procedure Integration
+DEADLINE: <2025-04-28 Mon>
+- [ ] Use `sp_GetAllUsers`
+- [ ] Use `sp_AddUser`
+- [ ] Use `sp_UpdateUser`
+- [ ] Use `sp_DeleteUser`
+
+** Frontend - UI Screens
+DEADLINE: <2025-04-29 Tue>
+- [ ] Create UserTable component
+- [ ] Add filtering functionality
+- [ ] Create UserForm component
+- [ ] Create ConfirmModal component
+- [ ] Connect form to API
+- [ ] Connect delete button to API
+
+** Validation & UX
+DEADLINE: <2025-04-30 Wed>
+- [ ] Add form validation (React Hook Form + Zod/Yup)
+- [ ] Show success/error messages
+- [ ] Add loading states
+- [ ] Ensure accessibility
+
+** Final Polish
+DEADLINE: <2025-05-01 Thu 08:00>
+- [ ] Style components
+- [ ] Ensure responsive design
+- [ ] Test all CRUD operations
+- [ ] Prepare for presentation
