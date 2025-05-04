@@ -4,13 +4,13 @@ import { useEffect, useState } from 'react';
 import UserTable from './UserTable';
 import AddUser from './AddUser';
 import UserSearchInput from './UserSearchInput';
-// import ConfirmDelete from './ConfirmDelete';
+import DeleteUser from './DeleteUser';
 import { User } from '@/types';
 import React from 'react';
 
 export default function UserManagement() {
     const [users, setUsers] = useState<User[]>([]);
-    const [showAddModal, setShowAddModal] = useState(false);
+    const [isDeleteOpen, setIsDeleteOpen] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [showAddEdit, setShowAddEdit] = useState(false);
@@ -41,7 +41,8 @@ export default function UserManagement() {
         console.log( 'Add user ');
     };
 
-    const handleDelete = (user: User) => {   
+    const handleDeleteUser = (user: User) => {   
+        console.log('Preparing to delete user:', user);
         setSelectedUser(user);
         setShowDelete(true);
         if (selectedUser) {
@@ -53,13 +54,18 @@ export default function UserManagement() {
     const handleDeleteConfirm = async () => {
         if(!selectedUser) return;
         try {
-            await fetch(`/api/users/${selectedUser.UserID}`, {
+            await fetch(`/api/users`, {
                 method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ UserID: selectedUser.UserID }),
             });
             setShowDelete(false);
+            setIsDeleteOpen(false); 
             loadUsers();
-        } catch (err) {
-            console.error('Delete failed: ', err);
+        } catch (error) {
+            console.error('Delete failed: ', error);
         }
     };
 
@@ -75,7 +81,7 @@ export default function UserManagement() {
                     + Add User
                 </button>
             </div>
-            <UserTable users={users} onEdit={handleEdit} onDelete={handleDelete} />
+            <UserTable users={users} onEdit={handleEdit} onDelete={handleDeleteUser} />
 
             {showAddEdit && (
                 <AddUser
@@ -87,10 +93,11 @@ export default function UserManagement() {
             )}
 
             {showDelete && (
-                <ConfirmDelete
+                <DeleteUser
+                    isOpen={showDelete}
                     user={selectedUser}
-                    onClose={() => setShowDelete(false)}
-                    onConfirm={handleDeleteConfirm} 
+                    onClose={() => setIsDeleteOpen(false)}
+                    onDelete={handleDeleteConfirm}
                 />
             )}
         </div>
