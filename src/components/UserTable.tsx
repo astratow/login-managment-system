@@ -32,12 +32,10 @@ export default function UserTable({ users, onEdit, onDelete} : UserTableProps) {
                     </tr>
                 </thead>
                 <tbody className="text-gray-700">
-                    {users.map((user, idx) => (
+                    {users.map((user) => (
                         <tr
                         key={user.UserID}
-                        className={`${
-                            idx % 2 === 0 ? 'bg-gray-50' : 'bg-white'
-                        } border-b border-gray-200`}
+                        className={`border-b border-gray-200`}
                         >
 
                         <td className="p-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm sm:text-base">

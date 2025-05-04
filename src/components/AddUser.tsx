@@ -84,6 +84,14 @@ export default function AddUser({ isOpen, onClose, onSave, initialData } :AddUse
                     onChange={handleChange}
                     className="border p-2 w-full mb-2"
                 />
+                <input
+                    type="text"
+                    name="MFA_Mobile"
+                    placeholder="MFA Mobile"
+                    value={formState.MFA_Mobile}
+                    onChange={handleChange}
+                    className="border p-2 w-full mb-2"
+                />
                 <select
                     name="Status"
                     value={formState.Status}
@@ -94,8 +102,52 @@ export default function AddUser({ isOpen, onClose, onSave, initialData } :AddUse
                     <option value="Inactive">Inactive</option>
                     <option value="Testing">Testing</option>
                 </select>
-                <div className="flex justify-between items-center mb-2">
-                    <div className="flex">
+                <div className="grid justify-between items-center mb-2">
+                    <div className="grid">
+                        <div>
+                            
+                        <input
+                            type="checkbox"
+                            name="BlockAccess"
+                            checked={!!formState.BlockAccess}
+                            onChange={(e) =>
+                                setFormState((prev) => ({
+                                    ...prev,
+                                    BlockAccess: e.target.checked ? 1 : 0,
+                                }))
+                            }
+                            className="mr-2"
+                            />
+                        <label>Block Access</label>
+                            </div>
+                            <div>
+
+                        <input
+                            type="checkbox"
+                            name="FunctionalUser"
+                            checked={!!formState.FunctionalUser}
+                            onChange={(e) =>
+                                setFormState((prev) => ({
+                                    ...prev,
+                                    FunctionalUser: e.target.checked ? 1 : 0,
+                                }))
+                            }
+                            className="mr-2"
+                            />
+                        <label>Functional User</label>
+                            </div>
+                            <div>
+
+                        <input
+                            type="checkbox"
+                            name="HierarchyMaintenance"
+                            checked={formState.HierarchyMaintenance}
+                            onChange={handleChange}
+                            className="mr-2"
+                            />
+                        <label>Hierarchy Maintenance</label>
+                            </div>
+                            <div>
 
                         <input
                             type="checkbox"
@@ -103,10 +155,11 @@ export default function AddUser({ isOpen, onClose, onSave, initialData } :AddUse
                             checked={formState.IsOSPAdmin}
                             onChange={handleChange}
                             className="mr-2"
-                        />
+                            />
                         <label>OSP Admin</label>
+                            </div>
                     </div>
-                    <div className="flex">
+                    <div className="flex justify-between">
                         <button onClick={handleSubmit} className="bg-blue-600 min-w-20 text-white p-2 rounded mr-2">Save</button>
                         <button onClick={onClose} className="bg-gray-400 min-w-20 text-white p-2 rounded">Cancel</button>
                     </div>

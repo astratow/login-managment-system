@@ -1,5 +1,5 @@
 import { NextApiRequest,NextApiResponse } from "next";
-import { executeStoredProc } from "@/lib/db";
+import executeStoredProc from "@/lib/db";
 
 export default async function handler(req: NextApiRequest, res:  NextApiResponse) {
     if ( req.method === 'GET' )   {

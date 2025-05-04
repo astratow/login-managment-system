@@ -6,6 +6,7 @@ import AddUser from './AddUser';
 import UserSearchInput from './UserSearchInput';
 // import ConfirmDelete from './ConfirmDelete';
 import { User } from '@/types';
+import React from 'react';
 
 export default function UserManagement() {
     const [users, setUsers] = useState<User[]>([]);
@@ -13,6 +14,7 @@ export default function UserManagement() {
     const [showDelete, setShowDelete] = useState(false);
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [showAddEdit, setShowAddEdit] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const loadUsers = async () => {
         try {
@@ -48,14 +50,6 @@ export default function UserManagement() {
         }
     };
 
-    // const handleDeleteUser = () => {
-    //     if (selectedUser) {
-    //         console.log('Deleting user: ', selectedUser.UserID);
-    //     }
-    //     setShowDelete(false);;
-    //     setSelectedUser(null);
-    // };
-
     const handleDeleteConfirm = async () => {
         if(!selectedUser) return;
         try {
@@ -72,10 +66,8 @@ export default function UserManagement() {
 
     return (
         <div className='space-y-4'>
-            <div className="flex items-between">
-                <UserSearchInput searchTerm={''} setSearchTerm={function (term: string): void {
-                    throw new Error('Function not implemented.');
-                } } />
+            <div className="flex justify-between">
+            <UserSearchInput searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
                 <button
                     onClick={handleAdd} 
                     className='bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700'
@@ -94,13 +86,13 @@ export default function UserManagement() {
                 />
             )}
 
-            {/* {showDelete && (
+            {showDelete && (
                 <ConfirmDelete
                     user={selectedUser}
                     onClose={() => setShowDelete(false)}
                     onConfirm={handleDeleteConfirm} 
                 />
-            )} */}
+            )}
         </div>
     );
 };
