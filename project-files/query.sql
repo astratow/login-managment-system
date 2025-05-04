@@ -1,3 +1,1 @@
-SELECT name 
-FROM sys.objects 
-WHERE type = 'P';
+SELECT * FROM Users WHERE UserID = 149;

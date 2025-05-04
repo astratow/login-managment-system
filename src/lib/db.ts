@@ -11,7 +11,7 @@ const config: sql.config = {
   },
 };
 
-export async function executeStoredProc(
+export default async function executeStoredProc(
   procName: string,
   inputParams: { name: string; type: sql.ISqlType; value: any }[] = []
 ) {

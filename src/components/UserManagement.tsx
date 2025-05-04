@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import UserTable from './UserTable';
 import AddUser from './AddUser';
+import UserSearchInput from './UserSearchInput';
 // import ConfirmDelete from './ConfirmDelete';
 import { User } from '@/types';
 
@@ -71,7 +72,10 @@ export default function UserManagement() {
 
     return (
         <div className='space-y-4'>
-            <div className="text-right">
+            <div className="flex items-between">
+                <UserSearchInput searchTerm={''} setSearchTerm={function (term: string): void {
+                    throw new Error('Function not implemented.');
+                } } />
                 <button
                     onClick={handleAdd} 
                     className='bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700'

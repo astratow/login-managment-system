@@ -80,7 +80,7 @@ export default function AddUser({ isOpen, onClose, onSave, initialData } :AddUse
                     type="email"
                     name="Email"
                     placeholder="Email"
-                    value={formState.O365Email}
+                    value={formState.Email}
                     onChange={handleChange}
                     className="border p-2 w-full mb-2"
                 />
