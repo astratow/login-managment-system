@@ -85,8 +85,14 @@ export default function UserManagement() {
                     + Add User
                 </button>
             </div>
-            <UserTable users={users} onEdit={handleEdit} onDelete={handleDeleteUser} />
-
+            <UserTable
+                users={users.filter((user) =>
+                    user.DisplayName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    user.Email?.toLowerCase().includes(searchTerm.toLowerCase())
+                )}
+                onEdit={handleEdit}
+                onDelete={handleDeleteUser}
+            />
             {showAddEdit && (
                 <AddUser
                     isOpen={showAddEdit}
