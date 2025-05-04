@@ -1,30 +1,36 @@
-import sql from 'mssql';
+import * as sql from 'mssql';
 
 const config: sql.config = {
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    server: process.env.DB_SERVER as string,
-    database: process.env.DB_NAME,
-    options: {
-        encrypt: true,
-    }
-}
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  server: process.env.DB_SERVER as string,
+  database: process.env.DB_NAME,
+  options: {
+    encrypt: true,
+    trustServerCertificate: false,
+  },
+};
 
-export async function executeStoredProc (   procName: string, 
-                                            inputParams: 
-                                            { 
-                                                name: string,
-                                                type: any,
-                                                value: any 
-                                            }[] = []) {
-                                                try {
-                                                    await sql.connect(config);
-                                                    const request = new sql.Request();
-                                                    inputParams.forEach(param => request.input(param.name, param.type, param.value));
-                                                    const result = await request.execute(procName);
-                                                    return result;
-                                                } catch (err) {
-                                                    console.error(err);
-                                                    throw err;
-                                                }
-                                            }
+export async function executeStoredProc(
+  procName: string,
+  inputParams: { name: string; type: sql.ISqlType; value: any }[] = []
+) {
+  const pool = new sql.ConnectionPool(config);
+  const poolConnect = pool.connect();
+
+  try {
+    await poolConnect;
+    const request = pool.request();
+    inputParams.forEach((param) => {
+      request.input(param.name, param.type, param.value);
+    });
+
+    const result = await request.execute(procName);
+    return result;
+  } catch (err) {
+    console.error('SQL error:', err);
+    throw err;
+  } finally {
+    await pool.close(); 
+  }
+}

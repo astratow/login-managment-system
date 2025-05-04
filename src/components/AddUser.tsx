@@ -39,9 +39,27 @@ export default function AddUser({ isOpen, onClose, onSave, initialData } :AddUse
         }));
     };
 
-    const handleSubmit = () => {
-        onSave(formState);
-        onClose();
+    const handleSubmit = async () => {
+        try {
+            const response = await fetch('/api/users/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formState),
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to create user');
+            }
+    
+            const createdUser = await response.json();
+            console.log("User created:", createdUser);
+            onSave(createdUser);
+            onClose();
+        } catch (error) {
+            console.error('Error saving user:', error);
+        }
     };
 
     if (!isOpen) return null;
