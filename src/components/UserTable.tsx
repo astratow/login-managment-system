@@ -3,7 +3,7 @@
 import React from 'react';
 import { User } from '@/types';
 import { PencilIcon, TrashIcon } from '@heroicons/react/16/solid';
-import { prisma } from '../lib/prisma';
+
 
 
 interface UserTableProps {
@@ -14,10 +14,6 @@ interface UserTableProps {
 
 export default function UserTable({ users, onEdit, onDelete} : UserTableProps) {
     
-    async function getUsers() {
-        const users = await prisma.user.findMany();
-        console.log(users);
-    }
     
     if (users.length === 0) {
         return <div>No users found.</div>

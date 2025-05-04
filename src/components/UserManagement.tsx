@@ -3,27 +3,23 @@
 import { useEffect, useState } from 'react';
 import UserTable from './UserTable';
 import AddUser from './AddUser';
-import ConfirmDelete from './ConfirmDelete';
+// import ConfirmDelete from './ConfirmDelete';
 import { User } from '@/types';
 
 export default function UserManagement() {
     const [users, setUsers] = useState<User[]>([]);
+    const [showAddModal, setShowAddModal] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [showAddEdit, setShowAddEdit] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [searchTerm, setSearchTerm] = useState('');
 
     const loadUsers = async () => {
-        setLoading(true);
         try {
             const res = await fetch('/api/users');
             const data = await res.json();
             setUsers(data);
         } catch (err) {
             console.error('Failed to fetch users: ', err);
-        } finally {
-            setLoading(false);
         }
     };
     useEffect(() => {
@@ -45,8 +41,19 @@ export default function UserManagement() {
     const handleDelete = (user: User) => {   
         setSelectedUser(user);
         setShowDelete(true);
-        console.log( 'Deleting user: ', user);   
+        if (selectedUser) {
+
+            console.log( 'Deleting user: ', user);
+        }
     };
+
+    // const handleDeleteUser = () => {
+    //     if (selectedUser) {
+    //         console.log('Deleting user: ', selectedUser.UserID);
+    //     }
+    //     setShowDelete(false);;
+    //     setSelectedUser(null);
+    // };
 
     const handleDeleteConfirm = async () => {
         if(!selectedUser) return;
@@ -64,14 +71,7 @@ export default function UserManagement() {
 
     return (
         <div className='space-y-4'>
-            <div className="flex justify-between items-center mb-4">
-                <input 
-                    type="text"
-                    placeholder="Search users..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="border px-4 py-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    />
+            <div className="text-right">
                 <button
                     onClick={handleAdd} 
                     className='bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700'
@@ -79,18 +79,7 @@ export default function UserManagement() {
                     + Add User
                 </button>
             </div>
-            {loading ? (
-                <div className="flex justify-center items-center py-10">
-                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
-                </div>
-            ) : (
-                    <UserTable 
-                        users={users.filter(user => user.DisplayName.toLowerCase().includes(searchTerm.toLocaleLowerCase()))} 
-                        onEdit={handleEdit} 
-                        onDelete={handleDelete} 
-                    />
-                )
-            }
+            <UserTable users={users} onEdit={handleEdit} onDelete={handleDelete} />
 
             {showAddEdit && (
                 <AddUser
@@ -101,15 +90,15 @@ export default function UserManagement() {
                 />
             )}
 
-            {showDelete && (
+            {/* {showDelete && (
                 <ConfirmDelete
                     user={selectedUser}
-                    isOpen={showDelete}
                     onClose={() => setShowDelete(false)}
-                    onConfirmDelete={handleDeleteConfirm} 
-                    userName={selectedUser?.DisplayName || ''}
+                    onConfirm={handleDeleteConfirm} 
                 />
-            )}
+            )} */}
         </div>
     );
 };
+
+
