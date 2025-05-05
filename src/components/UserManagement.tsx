@@ -10,7 +10,6 @@ import React from 'react';
 
 export default function UserManagement() {
     const [users, setUsers] = useState<User[]>([]);
-    const [isDeleteOpen, setIsDeleteOpen] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [showAddEdit, setShowAddEdit] = useState(false);
@@ -66,8 +65,6 @@ export default function UserManagement() {
                   body: JSON.stringify({ UserID: selectedUser.UserID }),
             });
             setShowDelete(false);
-            setIsDeleteOpen(false); 
-            loadUsers();
         } catch (error) {
             console.error('Delete failed: ', error);
         }
@@ -106,7 +103,7 @@ export default function UserManagement() {
                 <DeleteUser
                     isOpen={showDelete}
                     user={selectedUser}
-                    onClose={() => setIsDeleteOpen(false)}
+                    onClose={() => setShowDelete(false)}
                     onDelete={handleDeleteConfirm}
                 />
             )}

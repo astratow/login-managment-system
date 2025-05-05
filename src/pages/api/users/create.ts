@@ -46,8 +46,9 @@ export default async function handler(request: NextApiRequest, response: NextApi
         message: 'User created successfully', 
         user: result.recordset 
     });
-  } catch (error: any) {
-    console.error('Error creating user:', error);
-    response.status(500).json({ error: error.message || 'Failed to create user' });
+  } catch (error) {
+    const err = error as Error;
+    console.error('Error creating user:', err);
+    response.status(500).json({ error: err.message || 'Failed to create user' });
   }
 }

@@ -13,7 +13,7 @@ const config: sql.config = {
 
 export default async function executeStoredProc(
   procName: string,
-  inputParams: { name: string; type: sql.ISqlType; value: any }[] = []
+  inputParams: { name: string; type: sql.ISqlType; value: string | number | boolean | Date | null }[] = []
 ) {
   const pool = new sql.ConnectionPool(config);
   const poolConnect = pool.connect();
