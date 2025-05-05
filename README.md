@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Login Management System
 
-## Getting Started
+A modern, full-stack user management system built with **Next.js**, **TypeScript**, and **Microsoft SQL Server**. This application allows you to **create, view, update, delete, and search users** with support for different user statuses and dynamic styling.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- ✅ Add, edit, and delete users
+- 🔍 Search users by name or email
+- 🎨 Status-based row coloring (Active, Test, Inactive)
+- 🔄 Responsive UI with loading indicators
+- ⚡ Backend powered by SQL Server stored procedures
+- 🌐 Deployed on Vercel
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🧱 Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Frontend**: React (with Next.js App Router), Tailwind CSS, TypeScript
+- **Backend**: API routes in Next.js calling SQL Server stored procedures
+- **Database**: Microsoft SQL Server
+- **Deployment**: Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📂 Project Structure
+src/
+├── components/
+│ ├── UserTable.tsx
+│ ├── AddUser.tsx
+│ ├── DeleteUser.tsx
+│ ├── UserSearchInput.tsx
+│ └── LoadingSpinner.tsx
+├── lib/
+│ └── db.ts # Executes stored procedures via mssql
+├── pages/
+│ └── api/
+│ └── users/
+│ ├── index.ts # GET all users
+│ ├── create.ts # POST new or updated user
+│ ├── delete.ts # DELETE a user
+├── types/
+│ └── index.ts # User interface
 
-## Learn More
+## ⚙️ Setup Instructions
 
-To learn more about Next.js, take a look at the following resources:
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/login-management-system.git
+   cd login-management-system
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```
+ 2.  Install dependencies
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    ```
+    npm install
+    ```
+3. Configure environment variables
 
-## Deploy on Vercel
+Create a .env.local file:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    ```
+    DB_USER=your_db_username
+    DB_PASSWORD=your_db_password
+    DB_SERVER=your_db_server_url
+    DB_NAME=your_database_name
+    ```
+4. Run the development server
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+```npm run dev```
+
+Visit http://localhost:3000 in your browser.
+
