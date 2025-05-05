@@ -28,38 +28,24 @@ A modern, full-stack user management system built with **Next.js**, **TypeScript
 
 ## 📂 Project Structure
 src/
-
+```
 ├── components/
-
 │ ├── UserTable.tsx
-
 │ ├── AddUser.tsx
-
 │ ├── DeleteUser.tsx
-
 │ ├── UserSearchInput.tsx
-
 │ └── LoadingSpinner.tsx
-
 ├── lib/
-
 │ └── db.ts # Executes stored procedures via mssql
-
 ├── pages/
-
 │ └── api/
-
 │ └── users/
-
 │ ├── index.ts # GET all users
-
 │ ├── create.ts # POST new or updated user
-
 │ ├── delete.ts # DELETE a user
-
 ├── types/
-
 │ └── index.ts # User interface
+```
 
 ## ⚙️ Setup Instructions
 
@@ -88,7 +74,7 @@ Create a .env.local file:
     DB_SERVER=your_db_server_url
     DB_NAME=your_database_name
     ```
-    
+
 4. Run the development server
 
 
